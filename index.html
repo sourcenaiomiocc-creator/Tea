@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ABC Retrô - Jogo educativo de alfabetização com visual retrô. Aprenda vogais, alfabeto, sílabas e palavras de forma divertida!">
+    <meta name="keywords" content="alfabetização, educação, jogo educativo, ABC, aprender, crianças, vogais, sílabas">
+    <meta name="author" content="ABC Retrô">
+    <meta name="theme-color" content="#1a1a2e">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="ABC Retrô - Jogo Educativo de Alfabetização">
+    <meta property="og:description" content="Aprenda vogais, alfabeto, sílabas e palavras de forma divertida com visual retrô!">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="ABC Retrô - Jogo Educativo de Alfabetização">
+    <meta name="twitter:description" content="Aprenda vogais, alfabeto, sílabas e palavras de forma divertida com visual retrô!">
+
+    <title>ABC Retrô - Jogo Educativo de Alfabetização</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <header id="game-header">
+            <h1 class="game-title">ABC Retrô</h1>
+            <div id="hud">
+                <div class="hud-item">
+                    <span>Pontos:</span>
+                    <span id="score">0</span>
+                </div>
+            </div>
+        </header>
+
+        <main id="screen-container">
+            <!-- Tela de Nome -->
+            <div id="name-screen" class="screen active">
+                <div class="name-form">
+                    <h2 class="question-subtitle">Qual é o seu nome?</h2>
+                    <input type="text" id="player-name-input" class="name-input" placeholder="Digite aqui..." maxlength="20" autocomplete="off">
+                    <button id="start-button" class="menu-button">Começar!</button>
+                </div>
+            </div>
+
+            <!-- Tela de Menu Principal -->
+            <div id="menu-screen" class="screen">
+                <div class="menu">
+                    <button class="menu-button" data-game="vowels">Vogais</button>
+                    <button class="menu-button" data-game="alphabet">Alfabeto</button>
+                    <button class="menu-button" data-game="syllables">Sílabas</button>
+                    <button class="menu-button" data-game="words">Palavras</button>
+                    <button id="leaderboard-button" class="menu-button center-button">Ranking</button>
+                </div>
+            </div>
+
+            <!-- Tela do Jogo -->
+            <div id="game-screen" class="screen">
+                <div id="question-area">
+                    <h2 id="question-title"></h2>
+                    <div id="question-content"></div>
+                </div>
+                <div id="options-area"></div>
+                <div id="feedback-area"></div>
+                <button id="back-to-menu" class="menu-button">Voltar</button>
+            </div>
+
+            <!-- Tela do Placar de Líderes -->
+            <div id="leaderboard-screen" class="screen">
+                <h2 class="game-title">Ranking</h2>
+                <div id="leaderboard-list"></div>
+                <button id="back-to-menu-from-leaderboard" class="menu-button">Voltar</button>
+            </div>
+
+        </main>
+
+        <footer id="game-footer">
+            <p>Feito com ❤️</p>
+        </footer>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="data.js"></script>
+    <script src="firebase.js"></script>
+    <script src="https://sfxr.me/jsfxr.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Regras para a coleção de ranking (leaderboard)
+    match /leaderboard/{entryId} {
+      // Qualquer pessoa pode ler o ranking
+      allow read: if true;
+
+      // Qualquer pessoa pode criar entradas no ranking
+      // com validação de campos obrigatórios
+      allow create: if request.resource.data.keys().hasAll(['playerName', 'score', 'game', 'timestamp']) &&
+                      request.resource.data.playerName is string &&
+                      request.resource.data.playerName.size() > 0 &&
+                      request.resource.data.playerName.size() <= 20 &&
+                      request.resource.data.score is number &&
+                      request.resource.data.score >= 0 &&
+                      request.resource.data.game is string;
+
+      // Impedir atualizações e exclusões (ranking é append-only)
+      allow update, delete: if false;
+    }
+
+    // Bloquear acesso a qualquer outra coleção
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
