@@ -49,6 +49,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const leaderboardList = document.getElementById('leaderboard-list');
 
     function init() {
+        // Salvar antes de fechar o navegador
+        window.addEventListener('beforeunload', () => {
+            if (gameState.score > gameState.lastSavedScore && typeof firebaseService !== 'undefined') {
+                // Usa sendBeacon para garantir que a requisição seja enviada mesmo fechando a página
+                const data = {
+                    playerName: gameState.playerName,
+                    score: gameState.score,
+                    game: gameState.currentGame,
+                    timestamp: new Date()
+                };
+                // Fallback: tenta salvar sincronamente
+                firebaseService.saveScore(gameState.playerName, gameState.score, gameState.currentGame);
+            }
+        });
+
         // Lógica da tela de nome
         startButton.addEventListener('click', () => {
             const name = playerNameInput.value.trim();
@@ -97,6 +112,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function backToMenu() {
+        // Salva pontuação ao voltar ao menu
+        if (gameState.score > gameState.lastSavedScore && typeof firebaseService !== 'undefined') {
+            firebaseService.saveScore(gameState.playerName, gameState.score, gameState.currentGame);
+            gameState.lastSavedScore = gameState.score;
+        }
+
         // Remove apenas as telas, mantém a pontuação acumulada
         gameScreen.classList.remove('active');
         leaderboardScreen.classList.remove('active');
@@ -187,8 +208,8 @@ document.addEventListener('DOMContentLoaded', () => {
         gameState.correctAnswers += 1;
         scoreElement.textContent = gameState.score;
 
-        // Salva automaticamente a cada 5 acertos
-        if (gameState.correctAnswers % 5 === 0 && typeof firebaseService !== 'undefined') {
+        // Salva em tempo real a cada acerto
+        if (typeof firebaseService !== 'undefined') {
             firebaseService.saveScore(gameState.playerName, gameState.score, gameState.currentGame);
             gameState.lastSavedScore = gameState.score;
         }

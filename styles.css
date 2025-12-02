@@ -279,3 +279,281 @@ body {
     25% { transform: translateX(-5px); }
     75% { transform: translateX(5px); }
 }
+
+/* ========================================
+   RESPONSIVIDADE - MOBILE E TABLETS
+   ======================================== */
+
+/* Tablets e telas médias (até 768px) */
+@media screen and (max-width: 768px) {
+    #game-container {
+        width: 98%;
+        padding: 15px;
+        border-width: 3px;
+    }
+
+    #game-header .game-title {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+    }
+
+    #hud {
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+    }
+
+    .screen {
+        min-height: 300px;
+    }
+
+    .menu {
+        gap: 15px;
+    }
+
+    .menu-button {
+        font-size: 1rem;
+        padding: 18px 15px;
+    }
+
+    #question-title {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+
+    #question-content {
+        font-size: 2.5rem;
+    }
+
+    .option-button {
+        font-size: 1.5rem;
+        padding: 18px 15px;
+    }
+
+    #feedback-area {
+        font-size: 1rem;
+    }
+
+    .word-display-box {
+        font-size: 1.5rem;
+        padding: 15px;
+        height: 40px;
+    }
+
+    .question-subtitle {
+        font-size: 1.2rem;
+    }
+
+    .name-input {
+        font-size: 1rem;
+        padding: 12px;
+    }
+
+    .leaderboard-item {
+        padding: 12px;
+        gap: 8px;
+    }
+
+    .leaderboard-item .rank {
+        font-size: 1rem;
+        min-width: 35px;
+    }
+
+    .leaderboard-item .player-name {
+        font-size: 0.9rem;
+    }
+
+    .leaderboard-item .player-score {
+        font-size: 0.8rem;
+    }
+
+    .leaderboard-item .game {
+        font-size: 0.6rem;
+    }
+}
+
+/* Smartphones (até 480px) */
+@media screen and (max-width: 480px) {
+    body {
+        align-items: flex-start;
+        padding: 10px 0;
+    }
+
+    #game-container {
+        width: 100%;
+        padding: 10px;
+        border-width: 2px;
+        border-left: none;
+        border-right: none;
+        box-shadow: 0 0 10px var(--primary-color);
+    }
+
+    #game-header .game-title {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 0px var(--secondary-color);
+    }
+
+    #hud {
+        font-size: 0.7rem;
+        margin-bottom: 10px;
+    }
+
+    .screen {
+        min-height: 250px;
+    }
+
+    .menu {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .menu .center-button {
+        max-width: 100%;
+    }
+
+    .menu-button {
+        font-size: 0.9rem;
+        padding: 15px 10px;
+        border-width: 2px;
+        box-shadow: 3px 3px 0px #000;
+    }
+
+    .menu-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 5px 5px 0px #000;
+    }
+
+    #question-area {
+        margin-bottom: 20px;
+    }
+
+    #question-title {
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+        line-height: 1.4;
+    }
+
+    #question-content {
+        font-size: 2rem;
+    }
+
+    #options-area {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .option-button {
+        font-size: 1.2rem;
+        padding: 15px 10px;
+        border-width: 2px;
+        min-height: 60px;
+    }
+
+    #feedback-area {
+        font-size: 0.9rem;
+        margin-top: 15px;
+        height: 25px;
+    }
+
+    .word-display-box {
+        font-size: 1.2rem;
+        padding: 12px;
+        height: 35px;
+        margin-top: 15px;
+        border-width: 2px;
+    }
+
+    .question-subtitle {
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+    .name-form {
+        gap: 20px;
+        padding: 0 10px;
+    }
+
+    .name-input {
+        font-size: 0.9rem;
+        padding: 10px;
+        border-width: 2px;
+    }
+
+    .leaderboard-item {
+        padding: 10px;
+        gap: 6px;
+        margin-bottom: 8px;
+        flex-wrap: wrap;
+    }
+
+    .leaderboard-item .rank {
+        font-size: 0.9rem;
+        min-width: 30px;
+    }
+
+    .leaderboard-item .player-info {
+        gap: 3px;
+    }
+
+    .leaderboard-item .player-name {
+        font-size: 0.8rem;
+    }
+
+    .leaderboard-item .player-score {
+        font-size: 0.7rem;
+    }
+
+    .leaderboard-item .game {
+        font-size: 0.55rem;
+        width: 100%;
+        text-align: right;
+    }
+
+    #game-footer {
+        font-size: 0.6rem;
+        margin-top: 15px;
+    }
+
+    .loading, .error, .empty {
+        padding: 15px;
+        font-size: 0.85rem;
+    }
+}
+
+/* Smartphones muito pequenos (até 360px) */
+@media screen and (max-width: 360px) {
+    #game-header .game-title {
+        font-size: 1.1rem;
+    }
+
+    #hud {
+        font-size: 0.65rem;
+    }
+
+    .menu-button {
+        font-size: 0.8rem;
+        padding: 12px 8px;
+    }
+
+    #question-title {
+        font-size: 0.8rem;
+    }
+
+    #question-content {
+        font-size: 1.8rem;
+    }
+
+    .option-button {
+        font-size: 1rem;
+        padding: 12px 8px;
+        min-height: 50px;
+    }
+
+    .name-input {
+        font-size: 0.8rem;
+    }
+
+    .question-subtitle {
+        font-size: 0.9rem;
+    }
+}
