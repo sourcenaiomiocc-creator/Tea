@@ -49,6 +49,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const leaderboardList = document.getElementById('leaderboard-list');
 
     function init() {
+        // Event delegation for option buttons (prevents memory leaks)
+        optionsArea.addEventListener('click', (e) => {
+            if (e.target.classList.contains('option-button')) {
+                playSound(sounds.click);
+                handleOptionClick(e.target);
+            }
+        });
+
         // Salvar antes de fechar o navegador
         window.addEventListener('beforeunload', () => {
             if (gameState.score > gameState.lastSavedScore && typeof firebaseService !== 'undefined') {
@@ -109,6 +117,31 @@ document.addEventListener('DOMContentLoaded', () => {
             playSound(sounds.click);
             backToMenu();
         });
+    }
+
+    // Central handler for all option button clicks (event delegation)
+    function handleOptionClick(button) {
+        switch (gameState.currentGame) {
+            case 'vowels':
+                const answer = button.dataset.answer === 'true';
+                checkVowelAnswer(answer, gameState.currentVowelIsVowel);
+                break;
+            case 'alphabet':
+                checkAlphabetAnswer(button.textContent, gameState.currentCorrectAnswer);
+                break;
+            case 'syllables':
+                checkSyllableAnswer(button.textContent, gameState.currentCorrectAnswer);
+                break;
+            case 'words':
+                gameState.currentWord.push(button.textContent);
+                button.disabled = true;
+                button.style.opacity = '0.5';
+                updateWordDisplay();
+                if (gameState.currentWord.length === gameState.correctSyllables.length) {
+                    checkWordAnswer();
+                }
+                break;
+        }
     }
 
     function backToMenu() {
@@ -237,22 +270,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const consonants = GAME_DATA.alphabet.filter(l => !GAME_DATA.vowels.includes(l.letter));
             letter = consonants[Math.floor(Math.random() * consonants.length)].letter;
         }
+
+        // Store current state for event handler
+        gameState.currentVowelIsVowel = isVowel;
+
         questionContent.textContent = letter;
         renderVowelOptions(isVowel);
     }
 
     function renderVowelOptions(isVowel) {
+        // No event listeners needed - using event delegation
         optionsArea.innerHTML = `
             <button class="option-button" data-answer="true">Sim</button>
             <button class="option-button" data-answer="false">Não</button>
         `;
-        document.querySelectorAll('.option-button').forEach(button => {
-            button.addEventListener('click', (e) => {
-                playSound(sounds.click);
-                const answer = e.target.dataset.answer === 'true';
-                checkVowelAnswer(answer, isVowel);
-            });
-        });
     }
 
     function checkVowelAnswer(answer, isVowel) {
@@ -277,6 +308,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const questionData = GAME_DATA.alphabet[Math.floor(Math.random() * GAME_DATA.alphabet.length)];
         const correctAnswer = questionData.letter;
 
+        // Store current state for event handler
+        gameState.currentCorrectAnswer = correctAnswer;
+
         questionContent.innerHTML = `<div>${questionData.word}</div><div style="font-size: 4rem;">${questionData.emoji}</div>`;
         const options = [correctAnswer];
         while (options.length < 4) {
@@ -288,13 +322,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderAlphabetOptions(options, correctAnswer) {
+        // No event listeners needed - using event delegation
         optionsArea.innerHTML = options.map(option => `<button class="option-button">${option}</button>`).join('');
-        document.querySelectorAll('.option-button').forEach(button => {
-            button.addEventListener('click', (e) => {
-                playSound(sounds.click);
-                checkAlphabetAnswer(e.target.textContent, correctAnswer);
-            });
-        });
     }
 
     function checkAlphabetAnswer(selectedAnswer, correctAnswer) {
@@ -319,6 +348,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const questionData = GAME_DATA.syllables[Math.floor(Math.random() * GAME_DATA.syllables.length)];
         const correctAnswer = questionData.syllable;
 
+        // Store current state for event handler
+        gameState.currentCorrectAnswer = correctAnswer;
+
         questionContent.innerHTML = `<div>${questionData.word}</div><div style="font-size: 4rem;">${questionData.emoji}</div>`;
         const options = [correctAnswer];
         while (options.length < 4) {
@@ -330,13 +362,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderSyllableOptions(options, correctAnswer) {
+        // No event listeners needed - using event delegation
         optionsArea.innerHTML = options.map(option => `<button class="option-button">${option}</button>`).join('');
-        document.querySelectorAll('.option-button').forEach(button => {
-            button.addEventListener('click', (e) => {
-                playSound(sounds.click);
-                checkSyllableAnswer(e.target.textContent, correctAnswer);
-            });
-        });
     }
 
     function checkSyllableAnswer(selectedAnswer, correctAnswer) {
@@ -370,16 +397,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderWordOptions(options) {
+        // No event listeners needed - using event delegation
         optionsArea.innerHTML = options.map(option => `<button class="option-button">${option}</button>`).join('');
-        document.querySelectorAll('.option-button').forEach(button => {
-            button.addEventListener('click', () => {
-                playSound(sounds.click);
-                gameState.currentWord.push(button.textContent);
-                button.disabled = true;
-                updateWordDisplay();
-                checkWordAnswer();
-            });
-        });
     }
 
     function updateWordDisplay() {

@@ -27,53 +27,61 @@
 </head>
 <body>
     <div id="game-container">
-        <header id="game-header">
+        <header id="game-header" role="banner">
             <h1 class="game-title">ABC Retrô</h1>
-            <div id="hud">
+            <div id="hud" role="status" aria-label="Informações do jogo">
                 <div class="hud-item">
                     <span>Pontos:</span>
-                    <span id="score">0</span>
+                    <span id="score" aria-live="polite" aria-atomic="true">0</span>
                 </div>
             </div>
         </header>
 
-        <main id="screen-container">
+        <main id="screen-container" role="main">
             <!-- Tela de Nome -->
-            <div id="name-screen" class="screen active">
+            <div id="name-screen" class="screen active" role="region" aria-label="Tela de entrada">
                 <div class="name-form">
                     <h2 class="question-subtitle">Qual é o seu nome?</h2>
-                    <input type="text" id="player-name-input" class="name-input" placeholder="Digite aqui..." maxlength="20" autocomplete="off">
-                    <button id="start-button" class="menu-button">Começar!</button>
+                    <input
+                        type="text"
+                        id="player-name-input"
+                        class="name-input"
+                        placeholder="Digite aqui..."
+                        maxlength="20"
+                        autocomplete="off"
+                        aria-label="Digite seu nome"
+                        aria-required="true">
+                    <button id="start-button" class="menu-button" aria-label="Começar o jogo">Começar!</button>
                 </div>
             </div>
 
             <!-- Tela de Menu Principal -->
-            <div id="menu-screen" class="screen">
-                <div class="menu">
-                    <button class="menu-button" data-game="vowels">Vogais</button>
-                    <button class="menu-button" data-game="alphabet">Alfabeto</button>
-                    <button class="menu-button" data-game="syllables">Sílabas</button>
-                    <button class="menu-button" data-game="words">Palavras</button>
-                    <button id="leaderboard-button" class="menu-button center-button">Ranking</button>
-                </div>
+            <div id="menu-screen" class="screen" role="region" aria-label="Menu principal">
+                <nav class="menu" aria-label="Escolha um jogo">
+                    <button class="menu-button" data-game="vowels" aria-label="Jogar jogo de Vogais">Vogais</button>
+                    <button class="menu-button" data-game="alphabet" aria-label="Jogar jogo de Alfabeto">Alfabeto</button>
+                    <button class="menu-button" data-game="syllables" aria-label="Jogar jogo de Sílabas">Sílabas</button>
+                    <button class="menu-button" data-game="words" aria-label="Jogar jogo de Palavras">Palavras</button>
+                    <button id="leaderboard-button" class="menu-button center-button" aria-label="Ver ranking de pontuações">Ranking</button>
+                </nav>
             </div>
 
             <!-- Tela do Jogo -->
-            <div id="game-screen" class="screen">
-                <div id="question-area">
+            <div id="game-screen" class="screen" role="region" aria-label="Área do jogo">
+                <div id="question-area" role="group" aria-label="Pergunta">
                     <h2 id="question-title"></h2>
-                    <div id="question-content"></div>
+                    <div id="question-content" aria-live="polite"></div>
                 </div>
-                <div id="options-area"></div>
-                <div id="feedback-area"></div>
-                <button id="back-to-menu" class="menu-button">Voltar</button>
+                <div id="options-area" role="group" aria-label="Opções de resposta"></div>
+                <div id="feedback-area" role="status" aria-live="assertive" aria-atomic="true"></div>
+                <button id="back-to-menu" class="menu-button" aria-label="Voltar ao menu principal">Voltar</button>
             </div>
 
             <!-- Tela do Placar de Líderes -->
-            <div id="leaderboard-screen" class="screen">
+            <div id="leaderboard-screen" class="screen" role="region" aria-label="Ranking">
                 <h2 class="game-title">Ranking</h2>
-                <div id="leaderboard-list"></div>
-                <button id="back-to-menu-from-leaderboard" class="menu-button">Voltar</button>
+                <div id="leaderboard-list" role="list" aria-live="polite"></div>
+                <button id="back-to-menu-from-leaderboard" class="menu-button" aria-label="Voltar ao menu principal">Voltar</button>
             </div>
 
         </main>

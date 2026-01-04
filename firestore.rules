@@ -1,26 +1,43 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Regras para a coleção de ranking (leaderboard)
+
+    // Helper functions for validation
+    function isValidPlayerName(name) {
+      return name is string
+             && name.size() > 0
+             && name.size() <= 50
+             && !name.matches('.*[<>].*'); // Prevent HTML tags
+    }
+
+    function isValidScore(score) {
+      return score is number
+             && score >= 0
+             && score <= 10000;
+    }
+
+    function isValidGameType(gameType) {
+      return gameType in ['alfabeto', 'numeros', 'cores', 'animais'];
+    }
+
+    // Leaderboard collection with enhanced security
     match /leaderboard/{entryId} {
-      // Qualquer pessoa pode ler o ranking
+      // Anyone can read the leaderboard
       allow read: if true;
 
-      // Qualquer pessoa pode criar entradas no ranking
-      // com validação de campos obrigatórios
-      allow create: if request.resource.data.keys().hasAll(['playerName', 'score', 'game', 'timestamp']) &&
-                      request.resource.data.playerName is string &&
-                      request.resource.data.playerName.size() > 0 &&
-                      request.resource.data.playerName.size() <= 20 &&
-                      request.resource.data.score is number &&
-                      request.resource.data.score >= 0 &&
-                      request.resource.data.game is string;
+      // Allow creating scores with strict validation
+      allow create: if request.resource.data.keys().hasAll(['playerName', 'score', 'game', 'timestamp'])
+                    && request.resource.data.keys().hasOnly(['playerName', 'score', 'game', 'timestamp'])
+                    && isValidPlayerName(request.resource.data.playerName)
+                    && isValidScore(request.resource.data.score)
+                    && isValidGameType(request.resource.data.game)
+                    && request.resource.data.timestamp is timestamp;
 
-      // Impedir atualizações e exclusões (ranking é append-only)
+      // Prevent updates and deletions (leaderboard is append-only)
       allow update, delete: if false;
     }
 
-    // Bloquear acesso a qualquer outra coleção
+    // Block access to any other collections
     match /{document=**} {
       allow read, write: if false;
     }
