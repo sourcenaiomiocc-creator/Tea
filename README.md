@@ -109,11 +109,13 @@ GAME_DATA.frutas = {
 
 ## 📝 Licença
 
-MIT License
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 ## 🤝 Contribuindo
 
 Pull requests são bem-vindos! Abra uma issue primeiro para discutir mudanças maiores.
+
+Para mais informações sobre como contribuir, leia o guia em [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 
